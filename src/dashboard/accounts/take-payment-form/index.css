@@ -14,11 +14,15 @@
 .take-payment__card {
     display: flex;
     flex-direction: column;
-    row-gap: 12px;
+    row-gap: 18px;
     padding: 20px;
     border-radius: 8px;
     border: 1px solid var(--admss-app-light-grey);
     box-shadow: 0 0 3px 0 var(--admss-app-main-blue);
+
+    &.pay-off {
+        row-gap: 11px;
+    }
 }
 
 .take-payment__title {
@@ -76,6 +80,7 @@
 }
 
 .take-payment__item {
+
     .currency-item__input:not(.take-payment__input--small) .p-inputnumber-input,
     .date-item__input .p-inputtext {
         height: var(--input-regular);
@@ -139,6 +144,7 @@
     .currency-item__input .p-inputnumber.take-payment__input--small {
         width: 100%;
     }
+
     .p-inputtext.take-payment__input--small,
     .p-inputnumber.take-payment__input--small {
         height: var(--input-small);
@@ -147,6 +153,7 @@
 }
 
 .take-payment__item {
+
     .currency-item__input .input-icon,
     .date-item__icon {
         height: var(--input-regular);
@@ -158,15 +165,24 @@
     border-left: 1px solid var(--admss-app-light-grey);
     padding-left: 20px;
     height: 100%;
+
+    .account-note {
+        height: 156px;
+        position: relative;
+        border-bottom: none;
+    }
+
+    .account-note:first-child {
+        margin-bottom: 30px;
+    }
+
+
 }
 
 .take-payment .form-line {
     margin: 12px 0;
 }
 
-.take-payment .account-note__input {
-    height: 114px;
-}
 
 .take-payment__info .info-section {
     margin-bottom: 30px;

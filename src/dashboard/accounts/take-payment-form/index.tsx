@@ -8,6 +8,8 @@ import { AccountPayOff } from "./pay-off";
 import { AccountBalanceAdjustment } from "./balance-adjustment";
 import "./index.css";
 import { observer } from "mobx-react-lite";
+import { useToast } from "dashboard/common/toast";
+import { TOAST_LIFETIME } from "common/settings";
 
 export enum AccountTakePaymentTabs {
     QUICK_PAY = "quick-pay",
@@ -21,6 +23,7 @@ export const AccountTakePayment = observer((): ReactElement => {
     const [searchParams, setSearchParams] = useSearchParams();
     const store = useStore().accountStore;
     const userStore = useStore().userStore;
+    const toast = useToast();
     const { authUser } = userStore;
     const {
         account: { accountnumber, accountstatus },
@@ -28,6 +31,7 @@ export const AccountTakePayment = observer((): ReactElement => {
         getAccountPaymentsInfo,
         getDrawers,
         getAccount,
+        saveTakePayment,
         prevPath,
     } = store;
 
@@ -79,6 +83,20 @@ export const AccountTakePayment = observer((): ReactElement => {
             setSearchParams({ tab: AccountTakePaymentTabs.QUICK_PAY });
         }
     }, [tabParam, setSearchParams]);
+
+    const handleSaveTakePayment = async () => {
+        const result = await saveTakePayment();
+        if (result?.error) {
+            toast.current?.show({
+                severity: "error",
+                summary: "Error",
+                detail: result.error,
+                life: TOAST_LIFETIME,
+            });
+        } else {
+            navigate(`/dashboard/accounts/${id}`);
+        }
+    };
 
     return (
         <div className='grid relative take-payment'>
@@ -137,7 +155,8 @@ export const AccountTakePayment = observer((): ReactElement => {
                             Cancel
                         </Button>
                         <Button
-                            onClick={() => navigate(`/dashboard/accounts/${id}`)}
+                            type='button'
+                            onClick={handleSaveTakePayment}
                             disabled={!isAccountPaymentChanged}
                             severity={isAccountPaymentChanged ? "success" : "secondary"}
                             className='uppercase px-6 account__button'

@@ -1,13 +1,45 @@
 .account-note {
-    border-radius: 5px;
     flex: 1 1 50%;
-    border: 1px solid var(--admss-app-light-grey);
     padding: 0;
     display: flex;
     flex-direction: column;
     height: 120px;
+    position: relative;
+
     .p-float-label {
         flex: 1;
+    }
+
+    .account-note__input {
+        height: calc(100% - 40px);
+        border-bottom: none;
+    }
+
+    .account-note__button.p-button {
+        height: 40px;
+
+
+        &.account-note__button[aria-label="Save"] {
+            position: absolute;
+            bottom: 0;
+            border-radius: 0 0 5px 5px;
+        }
+
+        &.account-note__button[aria-label="Clear"] {
+            position: absolute;
+            width: 50%;
+            bottom: 0;
+            left: 0;
+            border-radius: 0 0 0 5px;
+        }
+
+        &.account-note__button[aria-label="Update"] {
+            position: absolute;
+            width: 50%;
+            bottom: 0;
+            right: 0;
+            border-radius: 0 0 5px 0;
+        }
     }
 }
 
@@ -17,7 +49,7 @@
 
 .account-note__input {
     width: 100%;
-    border: none;
+    border-radius: 5px 5px 0 0;
     resize: none;
 }
 
@@ -53,6 +85,7 @@
     height: 20px;
     border: none;
 }
+
 .account-notes__table-button.p-button:last-child {
     color: var(--admss-app-primary);
 }
@@ -92,8 +125,8 @@
         border-right: none;
     }
 
-    .account-notes__table-action + td,
-    .account-notes__table-action + th {
+    .account-notes__table-action+td,
+    .account-notes__table-action+th {
         border-left: 0;
     }
 }

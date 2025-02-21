@@ -171,6 +171,27 @@ export class AccountStore {
         }
     );
 
+    public saveTakePayment = action(async (): Promise<BaseResponseError | undefined> => {
+        try {
+            this._isLoading = true;
+            const response = await updateAccountTakePayment(
+                this._accountID,
+                this._accountTakePayment
+            );
+            if (response?.status === Status.ERROR) {
+                const { error } = response as BaseResponseError;
+
+                throw new Error(error);
+            }
+        } catch (error: Error | any) {
+            const err = error as Error;
+            return {
+                status: Status.ERROR,
+                error: err.message,
+            };
+        }
+    });
+
     public saveAccount = action(async (): Promise<string | undefined> => {
         try {
             this._isLoading = true;
@@ -179,12 +200,7 @@ export class AccountStore {
                 ...this._account,
                 extdata: this._accountExtData,
             });
-            const takePaymentResponse = await updateAccountTakePayment(
-                this._accountID,
-                this._accountTakePayment
-            );
-
-            await Promise.all([response, takePaymentResponse]).then((response) =>
+            await Promise.all([response]).then((response) =>
                 response.forEach((res) => {
                     if (res?.status === Status.ERROR) {
                         const { error } = res as BaseResponseError;

@@ -124,7 +124,7 @@ export const TakePaymentInfo = observer((): ReactElement => {
             <NoteEditor
                 id='account-payment'
                 value={accountNote.alert}
-                className='mt-3'
+                className='mt-4'
                 label='Payment Alert'
                 onSave={() => handleSaveNote("alert")}
                 onClear={() => {
