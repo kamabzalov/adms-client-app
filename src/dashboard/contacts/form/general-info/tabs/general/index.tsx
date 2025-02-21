@@ -40,6 +40,7 @@ export const ContactsGeneralInfo = observer((): ReactElement => {
     const [savedLastName, setSavedLastName] = useState<string>(contact.lastName || "");
     const [savedMiddleName, setSavedMiddleName] = useState<string>(contact.middleName || "");
     const [savedBusinessName, setSavedBusinessName] = useState<string>(contact.businessName || "");
+    const prevTypeRef = useRef<number | null>(null);
 
     useEffect(() => {
         getContactsTypeList(id || "0").then((response) => {
@@ -90,6 +91,8 @@ export const ContactsGeneralInfo = observer((): ReactElement => {
     }, [isBusinessNameRequired, contact.firstName, contact.lastName]);
 
     useEffect(() => {
+        if (prevTypeRef.current === contact.type) return;
+
         if (shouldDisableNameFields) {
             if (contact.firstName) {
                 setSavedFirstName(contact.firstName);
@@ -120,20 +123,28 @@ export const ContactsGeneralInfo = observer((): ReactElement => {
                 changeContact("middleName", savedMiddleName, false);
             }
         }
-    }, [shouldDisableNameFields, contact.businessName, setFieldValue, changeContact]);
+
+        prevTypeRef.current = contact.type;
+    }, [shouldDisableNameFields, contact.type]);
 
     useEffect(() => {
+        if (prevTypeRef.current === contact.type) return;
+
         if (shouldDisableBusinessName) {
-            setSavedBusinessName(contact.businessName);
-            setFieldValue("businessName", "");
-            changeContact("businessName", "", false);
+            if (contact.businessName) {
+                setSavedBusinessName(contact.businessName);
+                setFieldValue("businessName", "");
+                changeContact("businessName", "", false);
+            }
         } else {
             if (!contact.businessName && savedBusinessName) {
                 setFieldValue("businessName", savedBusinessName);
                 changeContact("businessName", savedBusinessName, false);
             }
         }
-    }, [shouldDisableBusinessName, contact.firstName, contact.lastName]);
+
+        prevTypeRef.current = contact.type;
+    }, [shouldDisableBusinessName, contact.type]);
 
     const handleOfacCheck = () => {
         if (!contactFullInfo.firstName || !contactFullInfo.lastName) {

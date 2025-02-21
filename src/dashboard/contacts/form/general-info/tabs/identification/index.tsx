@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { observer } from "mobx-react-lite";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
@@ -16,7 +15,6 @@ import { STATES_LIST } from "common/constants/states";
 import { DLSide } from "store/stores/contact";
 import { useParams } from "react-router-dom";
 import { Loader } from "dashboard/common/loader";
-import { BaseResponseError, Status } from "common/models/base-response";
 import { useToast } from "dashboard/common/toast";
 import { TOAST_LIFETIME } from "common/settings";
 import { BUYER_ID, GENERAL_CONTACT_TYPE } from "dashboard/contacts/form/general-info";
@@ -25,6 +23,7 @@ import dlBackImage from "assets/images/empty_back_dl.svg";
 import uploadImage from "assets/images/upload.svg";
 import { Image } from "primereact/image";
 import { InputMask } from "primereact/inputmask";
+import { BaseResponseError, Status } from "common/models/base-response";
 
 const SexList = [
     {
@@ -57,15 +56,22 @@ export const ContactsIdentificationInfo = observer(
             changeContactExtData,
             frontSideDL,
             backSideDL,
+            coBuyerFrontSideDL,
+            coBuyerBackSideDL,
             getImagesDL,
-            removeImagesDL,
+            getCoBuyerContact,
             frontSideDLurl,
             backSideDLurl,
+            coBuyerFrontSideDLurl,
+            coBuyerBackSideDLurl,
             isLoading,
         } = store;
         const toast = useToast();
         const fileUploadFrontRef = useRef<FileUpload>(null);
         const fileUploadBackRef = useRef<FileUpload>(null);
+        const coBuyerFileUploadFrontRef = useRef<FileUpload>(null);
+        const coBuyerFileUploadBackRef = useRef<FileUpload>(null);
+        const prevCoBuyerUID = useRef<string>("");
 
         useEffect(() => {
             getImagesDL();
@@ -77,6 +83,16 @@ export const ContactsIdentificationInfo = observer(
         );
 
         useEffect(() => {
+            if (type !== CO_BUYER) return;
+
+            if (!contact.cobuyeruid || contact.cobuyeruid === prevCoBuyerUID.current) return;
+
+            prevCoBuyerUID.current = contact.cobuyeruid;
+
+            getCoBuyerContact();
+        }, [type, contact.cobuyeruid, getCoBuyerContact]);
+
+        useEffect(() => {
             if (frontSideDL.size) {
                 store.frontSideDLurl = URL.createObjectURL(frontSideDL);
             }
@@ -86,28 +102,50 @@ export const ContactsIdentificationInfo = observer(
             }
         }, []);
 
-        const onTemplateSelect = (e: FileUploadSelectEvent, side: DLSide) => {
+        const onTemplateSelect = (e: FileUploadSelectEvent, side: DLSide, isCoBuyer: boolean) => {
+            store.isContactChanged = true;
             if (side === DLSides.FRONT) {
-                store.frontSideDL = e.files[0];
+                isCoBuyer
+                    ? (store.coBuyerFrontSideDL = e.files[0])
+                    : (store.frontSideDL = e.files[0]);
             }
             if (side === DLSides.BACK) {
-                store.backSideDL = e.files[0];
+                isCoBuyer
+                    ? (store.coBuyerBackSideDL = e.files[0])
+                    : (store.backSideDL = e.files[0]);
             }
         };
 
         const handleDeleteImage = (side: DLSide, withRequest?: boolean) => {
-            if (side === DLSides.FRONT) {
-                fileUploadFrontRef.current?.clear();
-                store.frontSideDL = {} as File;
-                changeContact("dluidfront", "");
+            if (type === CO_BUYER) {
+                if (side === DLSides.FRONT) {
+                    coBuyerFileUploadFrontRef.current?.clear();
+                    store.coBuyerFrontSideDL = {} as File;
+                    changeContact("dluidfront", "");
+                } else {
+                    coBuyerFileUploadBackRef.current?.clear();
+                    store.coBuyerBackSideDL = {} as File;
+                    changeContact("dluidback", "");
+                }
             } else {
-                fileUploadBackRef.current?.clear();
-                store.backSideDL = {} as File;
-                changeContact("dluidback", "");
+                if (side === DLSides.FRONT) {
+                    fileUploadFrontRef.current?.clear();
+                    store.frontSideDL = {} as File;
+                    changeContact("dluidfront", "");
+                } else {
+                    fileUploadBackRef.current?.clear();
+                    store.backSideDL = {} as File;
+                    changeContact("dluidback", "");
+                }
             }
 
             if (withRequest) {
-                removeImagesDL(side).then((response) => {
+                const removePromise =
+                    type === CO_BUYER
+                        ? store.removeImagesDL(side, true)
+                        : store.removeImagesDL(side);
+
+                removePromise.then((response) => {
                     if (response?.status === Status.ERROR) {
                         const { error, status } = response as BaseResponseError;
                         toast.current?.show({
@@ -131,7 +169,20 @@ export const ContactsIdentificationInfo = observer(
         const itemTemplate = (image: File | string, side: DLSide) => {
             const isFilePath = typeof image === "string";
             const alt = isFilePath ? "driven license" : image?.name;
-            const src = isFilePath ? image : URL.createObjectURL(image);
+            let src;
+            if (type === CO_BUYER) {
+                if (side === DLSides.FRONT) {
+                    src = store.coBuyerFrontSideDLurl;
+                } else {
+                    src = store.coBuyerBackSideDLurl;
+                }
+            } else {
+                if (side === DLSides.FRONT) {
+                    src = store.frontSideDLurl;
+                } else {
+                    src = store.backSideDLurl;
+                }
+            }
             return (
                 <div className='flex align-items-center dl-presentation relative'>
                     <Image
@@ -354,17 +405,27 @@ export const ContactsIdentificationInfo = observer(
 
                         <div
                             className={`col-6 identification-dl ${
-                                frontSideDL.size ? "identification-dl__active" : ""
+                                (type === BUYER ? frontSideDL.size : coBuyerFrontSideDL.size)
+                                    ? "identification-dl__active"
+                                    : ""
                             }`}
                         >
                             <div className='identification-dl__title'>Frontside</div>
-                            {frontSideDLurl && isLoading ? (
+                            {(type === BUYER ? frontSideDLurl : coBuyerFrontSideDLurl) &&
+                            isLoading ? (
                                 <Loader size='large' />
-                            ) : frontSideDLurl ? (
-                                itemTemplate(frontSideDLurl, DLSides.FRONT)
+                            ) : (type === BUYER ? frontSideDLurl : coBuyerFrontSideDLurl) ? (
+                                itemTemplate(
+                                    type === BUYER ? frontSideDLurl : coBuyerFrontSideDLurl,
+                                    DLSides.FRONT
+                                )
                             ) : (
                                 <FileUpload
-                                    ref={fileUploadFrontRef}
+                                    ref={
+                                        type === BUYER
+                                            ? fileUploadFrontRef
+                                            : coBuyerFileUploadFrontRef
+                                    }
                                     accept='image/*'
                                     headerTemplate={(props) => chooseTemplate(props, DLSides.FRONT)}
                                     chooseLabel='Choose from files'
@@ -375,7 +436,9 @@ export const ContactsIdentificationInfo = observer(
                                         itemTemplate(file as File, DLSides.FRONT)
                                     }
                                     emptyTemplate={emptyTemplate(DLSides.FRONT)}
-                                    onSelect={(event) => onTemplateSelect(event, DLSides.FRONT)}
+                                    onSelect={(event) =>
+                                        onTemplateSelect(event, DLSides.FRONT, type === CO_BUYER)
+                                    }
                                     progressBarTemplate={<></>}
                                     className='contact-upload'
                                 />
@@ -383,17 +446,27 @@ export const ContactsIdentificationInfo = observer(
                         </div>
                         <div
                             className={`col-6 identification-dl ${
-                                backSideDL.size ? "identification-dl__active" : ""
+                                (type === BUYER ? backSideDL.size : coBuyerBackSideDL.size)
+                                    ? "identification-dl__active"
+                                    : ""
                             }`}
                         >
                             <div className='identification-dl__title'>Backside</div>
-                            {backSideDLurl && isLoading ? (
+                            {(type === BUYER ? backSideDLurl : coBuyerBackSideDLurl) &&
+                            isLoading ? (
                                 <Loader size='large' />
-                            ) : backSideDLurl ? (
-                                itemTemplate(backSideDLurl, DLSides.BACK)
+                            ) : (type === BUYER ? backSideDLurl : coBuyerBackSideDLurl) ? (
+                                itemTemplate(
+                                    type === BUYER ? backSideDLurl : coBuyerBackSideDLurl,
+                                    DLSides.BACK
+                                )
                             ) : (
                                 <FileUpload
-                                    ref={fileUploadBackRef}
+                                    ref={
+                                        type === BUYER
+                                            ? fileUploadBackRef
+                                            : coBuyerFileUploadBackRef
+                                    }
                                     accept='image/*'
                                     headerTemplate={(props) => chooseTemplate(props, DLSides.BACK)}
                                     chooseLabel='Choose from files'
@@ -404,7 +477,9 @@ export const ContactsIdentificationInfo = observer(
                                         itemTemplate(file as File, DLSides.BACK)
                                     }
                                     emptyTemplate={emptyTemplate(DLSides.BACK)}
-                                    onSelect={(event) => onTemplateSelect(event, DLSides.BACK)}
+                                    onSelect={(event) =>
+                                        onTemplateSelect(event, DLSides.BACK, type === CO_BUYER)
+                                    }
                                     className='contact-upload'
                                     progressBarTemplate={<></>}
                                 />

@@ -123,6 +123,10 @@ export const setCursorToStart = (element: HTMLInputElement | null) => {
     }
 };
 
+export const truncateText = (text: string, maxLength: number = 30) => {
+    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+};
+
 export const formatDateForServer = (date: Date): string => {
     const pad = (num: number) => num.toString().padStart(2, "0");
 

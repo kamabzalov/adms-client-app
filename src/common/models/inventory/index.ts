@@ -173,7 +173,7 @@ export interface InventorySetResponse extends BaseResponseError {
     itemuid: string;
 }
 
-export interface CreateMediaItemRecordResponse extends BaseResponse {
+export interface CreateMediaItemRecordResponse extends BaseResponseError {
     itemUID: string;
 }
 

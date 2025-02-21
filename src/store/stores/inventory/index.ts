@@ -13,6 +13,8 @@ import {
     InventoryMediaPostData,
     InventoryMedia,
     InventoryWebCheck,
+    CreateMediaItemRecordResponse,
+    InventorySetResponse,
 } from "common/models/inventory";
 import { getAccountPayment } from "http/services/accounts.service";
 import {
@@ -465,12 +467,14 @@ export class InventoryStore {
                         formData.append("file", file);
 
                         try {
-                            const createMediaResponse = await createMediaItemRecord(mediaType);
+                            const createMediaResponse = (await createMediaItemRecord(
+                                mediaType
+                            )) as CreateMediaItemRecordResponse;
                             if (createMediaResponse?.status === Status.OK) {
-                                const uploadMediaResponse = await uploadInventoryMedia(
+                                const uploadMediaResponse = (await uploadInventoryMedia(
                                     createMediaResponse.itemUID,
                                     formData
-                                );
+                                )) as InventorySetResponse;
                                 if (uploadMediaResponse?.status === Status.OK) {
                                     await setMediaItemData(this._inventoryID, {
                                         mediaitemuid: uploadMediaResponse.itemuid,

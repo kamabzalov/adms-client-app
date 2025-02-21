@@ -245,6 +245,7 @@ export interface Contact extends BaseResponseError {
     businessName: string;
     businessSite: string;
     city: string;
+    cobuyeruid: string;
     companyName: string;
     contactuid: string;
     created: string;
@@ -367,4 +368,10 @@ export enum ContactTypeNameList {
     AUCTIONS = "Auctions",
     CONSIGNORS = "Consignors",
     GENERAL = "General",
+}
+
+export interface SetContactResponse extends BaseResponseError {
+    OFAC?: ContactOFAC;
+    OFAC_cobuyer?: ContactOFAC;
+    contactuid: string;
 }

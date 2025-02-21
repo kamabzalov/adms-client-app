@@ -55,7 +55,12 @@ export const getInventoryMediaInfo = async (mediauid: string) => {
             return request.data;
         } else throw new Error();
     } catch (error) {
-        // TODO: add error handler
+        if (isAxiosError(error)) {
+            return {
+                status: Status.ERROR,
+                error: error.response?.data.error || "Error while getting media info",
+            };
+        }
     }
 };
 
@@ -70,7 +75,15 @@ export const createMediaItemRecord = async (mediaType?: MediaType) => {
             return response.data;
         }
     } catch (error) {
-        // TODO: add error handler
+        if (isAxiosError(error)) {
+            return {
+                status: Status.ERROR,
+                error:
+                    error.response?.data.info ||
+                    error.response?.data.error ||
+                    "Error while creating media item record",
+            };
+        }
     }
 };
 
@@ -86,7 +99,15 @@ export const uploadInventoryMedia = async (inventoryUid: string, inventoryData: 
             return response.data;
         }
     } catch (error) {
-        // TODO: add error handler
+        if (isAxiosError(error)) {
+            return {
+                status: Status.ERROR,
+                error:
+                    error.response?.data.info ||
+                    error.response?.data.error ||
+                    "Error while uploading media",
+            };
+        }
     }
 };
 

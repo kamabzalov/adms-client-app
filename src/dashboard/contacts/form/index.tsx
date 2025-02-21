@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Steps } from "primereact/steps";
 import { ReactElement, Suspense, useEffect, useRef, useState } from "react";
 import { Accordion, AccordionTab } from "primereact/accordion";
@@ -21,6 +20,8 @@ import { ConfirmModal } from "dashboard/common/dialog/confirm";
 import { DashboardDialog } from "dashboard/common/dialog";
 import { ContactMediaData } from "./media-data";
 import { DeleteForm } from "./delete-form";
+import { truncateText } from "common/helpers";
+import { Tooltip } from "primereact/tooltip";
 const STEP = "step";
 
 export type PartialContact = Pick<
@@ -366,14 +367,35 @@ export const ContactForm = observer((): ReactElement => {
                             </h2>
                             {id && (
                                 <div className='card-header-info'>
-                                    Full Name
-                                    <span className='card-header-info__data'>{`${
-                                        contact!.firstName || ""
-                                    } ${contact?.lastName || ""}`}</span>
-                                    Company name
-                                    <span className='card-header-info__data'>
-                                        {contact?.businessName}
-                                    </span>
+                                    <Tooltip target='.tooltip-target' />
+
+                                    {(contact.firstName || contact.lastName) && (
+                                        <>
+                                            Full Name
+                                            <span
+                                                className='card-header-info__data tooltip-target'
+                                                data-pr-tooltip={`${contact.firstName || ""} ${contact.lastName || ""}`}
+                                                data-pr-position='top'
+                                            >
+                                                {truncateText(
+                                                    `${contact.firstName || ""} ${contact.lastName || ""}`
+                                                )}
+                                            </span>
+                                        </>
+                                    )}
+
+                                    {contact?.businessName && (
+                                        <>
+                                            Company name
+                                            <span
+                                                className='card-header-info__data tooltip-target'
+                                                data-pr-tooltip={contact.businessName}
+                                                data-pr-position='top'
+                                            >
+                                                {truncateText(contact.businessName)}
+                                            </span>
+                                        </>
+                                    )}
                                 </div>
                             )}
                         </div>

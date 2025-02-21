@@ -5,9 +5,10 @@ import {
     ContactUser,
     ContactsCategories,
     SalespersonsList,
+    SetContactResponse,
     TotalUsers,
 } from "common/models/contact";
-import { BaseResponse, BaseResponseError, Status } from "common/models/base-response";
+import { BaseResponseError, Status } from "common/models/base-response";
 import { isAxiosError } from "axios";
 import { ListData } from "common/models";
 
@@ -99,7 +100,7 @@ export const setContact = async (
     contactData: Partial<Contact>
 ): Promise<BaseResponseError | undefined> => {
     try {
-        const response = await authorizedUserApiInstance.post<BaseResponseError>(
+        const response = await authorizedUserApiInstance.post<SetContactResponse>(
             `contacts/${contactuid || 0}/set`,
             contactData
         );
@@ -123,7 +124,7 @@ export const setContactDL = async (
     { dluidback, dluidfront }: { dluidfront?: string; dluidback?: string }
 ) => {
     try {
-        const response = await authorizedUserApiInstance.post<BaseResponse>(
+        const response = await authorizedUserApiInstance.post<BaseResponseError>(
             `contacts/${contactuid}/dlicense`,
             {
                 dluidfront,
@@ -182,7 +183,7 @@ export const deleteContact = async (contactuid: string, data: Record<string, str
 
 export const deleteContactFrontDL = async (contactuid: string) => {
     try {
-        const response = await authorizedUserApiInstance.post<BaseResponse>(
+        const response = await authorizedUserApiInstance.post<BaseResponseError>(
             `contacts/${contactuid}/deletedlicensefront`
         );
 
@@ -201,7 +202,7 @@ export const deleteContactFrontDL = async (contactuid: string) => {
 
 export const deleteContactBackDL = async (contactuid: string) => {
     try {
-        const response = await authorizedUserApiInstance.post<BaseResponse>(
+        const response = await authorizedUserApiInstance.post<BaseResponseError>(
             `contacts/${contactuid}/deletedlicenseback`
         );
 
