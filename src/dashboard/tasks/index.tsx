@@ -23,7 +23,6 @@ import { useStore } from "store/hooks";
 import { Task } from "common/models/tasks";
 import { getTasksByUserId } from "http/services/tasks.service";
 import { useToast } from "dashboard/common/toast";
-import { FilterOptions, filterOptions } from "dashboard/common/filter";
 import {
     MultiSelect,
     MultiSelectChangeEvent,
@@ -126,8 +125,6 @@ export const TasksDataTable = observer(
         const [activeColumns, setActiveColumns] = useState<TableColumnsList[]>(selectableColumns);
         const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
         const [myTasksOnly, setMyTasksOnly] = useState<boolean>(false);
-        const [selectedFilterOptions, setSelectedFilterOptions] = useState<FilterOptions[]>([]);
-        const [selectedFilter, setSelectedFilter] = useState<Pick<FilterOptions, "value">[]>([]);
         const [expandedRows, setExpandedRows] = useState<DataTableValue[]>([]);
         const [showTaskDialog, setShowTaskDialog] = useState<boolean>(false);
         const [currentTask, setCurrentTask] = useState<Task | null>(null);
@@ -243,26 +240,22 @@ export const TasksDataTable = observer(
         };
 
         const dropdownFilterHeaderPanel = (evt: MultiSelectPanelHeaderTemplateEvent) => {
+            const allStatusesSelected = selectedStatusFilters.length === TASKS_STATUS_LIST.length;
+
             return (
                 <div className='dropdown-header flex pb-1'>
                     <label className='cursor-pointer dropdown-header__label'>
                         <Checkbox
-                            checked={
-                                filterOptions.filter((option) => !option.disabled).length ===
-                                selectedFilter.length
-                            }
+                            checked={allStatusesSelected}
                             onChange={(e) => {
                                 const isChecked = e.target.checked;
-                                setSelectedFilter(
-                                    isChecked
-                                        ? filterOptions.map((option) => ({ value: option.value }))
-                                        : []
-                                );
-                                setSelectedFilterOptions(
-                                    isChecked
-                                        ? filterOptions.filter((option) => !option.disabled)
-                                        : []
-                                );
+                                if (isChecked) {
+                                    setSelectedStatusFilters(
+                                        TASKS_STATUS_LIST.map((status) => status.value || "")
+                                    );
+                                } else {
+                                    setSelectedStatusFilters([]);
+                                }
                             }}
                             className='dropdown-header__checkbox mr-2'
                         />
@@ -271,8 +264,7 @@ export const TasksDataTable = observer(
                     <button
                         className='p-multiselect-close p-link'
                         onClick={(e) => {
-                            setSelectedFilter([]);
-                            setSelectedFilterOptions([]);
+                            setSelectedStatusFilters([]);
                             evt.onCloseClick(e);
                         }}
                     >
@@ -333,11 +325,6 @@ export const TasksDataTable = observer(
                 </div>
             );
         };
-
-        const filteredTasks = tasks.filter((task) => {
-            if (selectedFilterOptions.length === 0) return true;
-            return selectedFilterOptions.some((option) => option.value === task.task_status);
-        });
 
         return (
             <div className='card-content tasks'>
@@ -437,7 +424,7 @@ export const TasksDataTable = observer(
                         ) : (
                             <DataTable
                                 showGridlines
-                                value={filteredTasks}
+                                value={tasks}
                                 lazy
                                 paginator
                                 first={lazyState.first}
