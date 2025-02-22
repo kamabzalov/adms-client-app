@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getTasksByUserId, setTaskStatus } from "http/services/tasks.service";
+import { getCurrentUserTasks, setTaskStatus } from "http/services/tasks.service";
 import { Checkbox } from "primereact/checkbox";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
@@ -31,10 +31,10 @@ export const TasksWidget = observer(() => {
     const toast = useRef<Toast>(null);
 
     const getTasks = async (taskCount = DEFAULT_TASK_COUNT) => {
-        const totalCount = await getTasksByUserId(authUser!.useruid, { total: 1 });
+        const totalCount = await getCurrentUserTasks(authUser!.useruid, { total: 1 });
         if (totalCount && !Array.isArray(totalCount)) setAllTasksCount(totalCount?.total);
 
-        const res = await getTasksByUserId(authUser!.useruid, { top: taskCount });
+        const res = await getCurrentUserTasks(authUser!.useruid, { top: taskCount });
         if (res && Array.isArray(res)) {
             setTasks(res);
         }

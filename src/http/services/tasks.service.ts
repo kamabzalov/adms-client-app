@@ -5,10 +5,10 @@ import { PostDataTask, Task, TaskStatus, TaskUser } from "common/models/tasks";
 
 import { authorizedUserApiInstance } from "http/index";
 
-export const getTasksByUserId = async (uid: string, params?: QueryParams) => {
+export const getAllTasks = async (useruid: string, params?: QueryParams) => {
     try {
         const response = await authorizedUserApiInstance
-            .get<Task[] & BaseResponseError>(`tasks/${uid}/listcurrent`, {
+            .get<Task[] & BaseResponseError>(`tasks/${useruid}/list`, {
                 params,
             })
             .then((response) => response.data)
@@ -19,6 +19,25 @@ export const getTasksByUserId = async (uid: string, params?: QueryParams) => {
             return {
                 status: Status.ERROR,
                 error: error.response?.data.error || "Error while getting tasks",
+            };
+        }
+    }
+};
+
+export const getCurrentUserTasks = async (useruid: string, params?: QueryParams) => {
+    try {
+        const response = await authorizedUserApiInstance
+            .get<Task[] & BaseResponseError>(`tasks/${useruid}/listcurrent`, {
+                params,
+            })
+            .then((response) => response.data)
+            .catch((err) => err.response.data);
+        return response;
+    } catch (error) {
+        if (isAxiosError(error)) {
+            return {
+                status: Status.ERROR,
+                error: error.response?.data.error || "Error while getting current user tasks",
             };
         }
     }
