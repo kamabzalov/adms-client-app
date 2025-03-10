@@ -101,9 +101,6 @@
 .adms-logout:before {
   content: "\75";
 }
-.adms-location:before {
-  content: "\76";
-}
 .adms-hide:before {
   content: "\77";
 }
@@ -128,9 +125,6 @@
 .adms-settings:before {
   content: "\44";
 }
-.adms-show:before {
-  content: "\45";
-}
 .adms-sign-up:before {
   content: "\46";
 }
@@ -140,7 +134,7 @@
 .adms-support-history:before {
   content: "\48";
 }
-.adms-table:before {
+.adms-table-search:before {
   content: "\49";
 }
 .adms-trash-can:before {
@@ -161,6 +155,84 @@
 .adms-zoom-in:before {
   content: "\4f";
 }
+.adms-location:before {
+  content: "\76";
+}
+.adms-show:before {
+  content: "\45";
+}
+.adms-schedule-pause:before {
+  content: "\51";
+}
+.adms-check:before {
+  content: "\52";
+}
+.adms-play-button:before {
+  content: "\53";
+}
+.adms-table-button:before {
+  content: "\54";
+}
+.adms-camera:before {
+  content: "\55";
+}
+.adms-open:before {
+  content: "\56";
+}
+.adms-info:before {
+  content: "\57";
+}
+.adms-slack-01:before {
+  content: "\58";
+}
 .adms-zoom-out:before {
   content: "\50";
+}
+.adms-copy:before {
+  content: "\59";
+}
+.adms-arrow-up:before {
+  content: "\5a";
+}
+.adms-arrow-right-1:before {
+  content: "\30";
+}
+.adms-schedule:before {
+  content: "\31";
+}
+.adms-facebook:before {
+  content: "\32";
+}
+.adms-save:before {
+  content: "\33";
+}
+.adms-download:before {
+  content: "\34";
+}
+.adms-skype:before {
+  content: "\35";
+}
+.adms-checked-favorite:before {
+  content: "\36";
+}
+.adms-sort-switch:before {
+  content: "\37";
+}
+.adms-sort-a-z:before {
+  content: "\38";
+}
+.adms-sort-z-a:before {
+  content: "\39";
+}
+.adms-whatsapp:before {
+  content: "\21";
+}
+.adms-check-modal:before {
+  content: "\22";
+}
+.adms-print-receipt-01:before {
+  content: "\23";
+}
+.adms-preview:before {
+  content: "\24";
 }

@@ -142,7 +142,7 @@ export const ReportFooter = observer(({ onRefetch }: ReportFooterProps): ReactEl
                 {report.itemuid && (
                     <Button
                         className='report__icon-button'
-                        icon='icon adms-blank'
+                        icon='icon adms-copy'
                         severity='success'
                         onClick={() => setDuplicateDialogVisible(true)}
                         outlined

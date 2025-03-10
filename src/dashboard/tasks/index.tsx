@@ -304,7 +304,7 @@ export const TasksDataTable = observer((): ReactElement => {
             <div className='grid datatable-controls'>
                 <div className='col-6 p-0 flex gap-3'>
                     <span className='p-input-icon-right tasks-search'>
-                        <i className='pi pi-search' />
+                        <i className='icon adms-search' />
                         <InputText
                             value={globalSearch}
                             placeholder='Search'

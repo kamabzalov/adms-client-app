@@ -22,6 +22,7 @@ import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import { CATEGORIES } from "common/constants/media-categories";
 import { Loader } from "dashboard/common/loader";
 import { useToast } from "dashboard/common/toast";
+import { emptyTemplate } from "dashboard/common/form/upload";
 
 const limitations: MediaLimitations = {
     formats: ["PNG", "JPEG", "TIFF"],
@@ -237,22 +238,6 @@ export const ImagesMedia = observer((): ReactElement => {
         );
     };
 
-    const emptyTemplate = () => {
-        return (
-            <div className='grid'>
-                <div className='flex align-items-center flex-column col-12'>
-                    <i className='pi pi-cloud-upload media__upload-icon' />
-                    <span className=' media__upload-icon-label'>Drag and Drop Images Here</span>
-                </div>
-                <div className='col-12 flex justify-content-center align-items-center media__upload-splitter'>
-                    <hr className='media__line mr-4 flex-1' />
-                    <span>or</span>
-                    <hr className='media__line ml-4 flex-1' />
-                </div>
-            </div>
-        );
-    };
-
     const handleChangeOrder = (list: Layout[]) => {
         const orderedList: Pick<InventoryMediaPostData, "itemuid" | "order">[] = [];
         if (list) {
@@ -280,7 +265,7 @@ export const ImagesMedia = observer((): ReactElement => {
                 onUpload={onTemplateUpload}
                 headerTemplate={chooseTemplate}
                 itemTemplate={itemTemplate}
-                emptyTemplate={emptyTemplate}
+                emptyTemplate={emptyTemplate("images")}
                 onSelect={onTemplateSelect}
                 chooseOptions={chooseOptions}
                 progressBarTemplate={<></>}

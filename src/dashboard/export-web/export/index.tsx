@@ -621,7 +621,7 @@ export const ExportWeb = ({ countCb }: ExportWebProps): ReactElement => {
                         tooltip='Add to schedule'
                     >
                         Add to
-                        <i className='icon adms-calendar export-web-controls__button-icon' />
+                        <i className='icon adms-schedule export-web-controls__button-icon' />
                     </Button>
                     <div className='export-web-controls__input'>
                         <MultiSelect
@@ -691,7 +691,7 @@ export const ExportWeb = ({ countCb }: ExportWebProps): ReactElement => {
                     <Button
                         severity='success'
                         type='button'
-                        icon='pi pi-download'
+                        icon='icon adms-download'
                         tooltip='Download export to web form'
                         onClick={() =>
                             authUser &&
@@ -704,7 +704,7 @@ export const ExportWeb = ({ countCb }: ExportWebProps): ReactElement => {
                         }
                     />
                     <span className='p-input-icon-right export-web__search ml-auto'>
-                        <i className='pi pi-search' />
+                        <i className='icon adms-search' />
                         <InputText
                             value={globalSearch}
                             placeholder='Search'

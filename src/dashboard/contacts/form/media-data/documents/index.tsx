@@ -12,6 +12,7 @@ import {
 import { InputText } from "primereact/inputtext";
 import { Tag } from "primereact/tag";
 import { MediaLimitations } from "common/models/inventory";
+import { emptyTemplate } from "dashboard/common/form/upload";
 
 const limitations: MediaLimitations = {
     formats: ["PDF", "PNG", "JPEG", "TIFF"],
@@ -106,22 +107,6 @@ export const ContactsDocuments = observer((): ReactElement => {
         );
     };
 
-    const emptyTemplate = () => {
-        return (
-            <div className='grid'>
-                <div className='flex align-items-center flex-column col-12'>
-                    <i className='pi pi-cloud-upload media__upload-icon' />
-                    <span className='media__upload-icon-label'>Drag and drop documents here</span>
-                </div>
-                <div className='col-12 flex justify-content-center align-items-center media__upload-splitter'>
-                    <hr className='media__line mr-4 flex-1' />
-                    <span>or</span>
-                    <hr className='media__line ml-4 flex-1' />
-                </div>
-            </div>
-        );
-    };
-
     const chooseOptions = {
         className: "media__button",
         label: "Choose from files",
@@ -138,7 +123,7 @@ export const ContactsDocuments = observer((): ReactElement => {
                 onUpload={onTemplateUpload}
                 headerTemplate={chooseTemplate}
                 itemTemplate={itemTemplate}
-                emptyTemplate={emptyTemplate}
+                emptyTemplate={emptyTemplate("documents")}
                 chooseOptions={chooseOptions}
                 progressBarTemplate={<></>}
                 className='col-12 mb-4'

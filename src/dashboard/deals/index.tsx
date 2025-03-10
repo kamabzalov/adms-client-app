@@ -400,7 +400,7 @@ export const DealsDataTable = observer(
                         <div className='contact-top-controls'>
                             <Button
                                 className='contact-top-controls__button'
-                                icon='pi pi-plus-circle'
+                                icon='icon adms-add-item'
                                 severity='success'
                                 type='button'
                                 tooltip='Add new deal'
@@ -416,7 +416,7 @@ export const DealsDataTable = observer(
                             <Button
                                 severity='success'
                                 type='button'
-                                icon='icon adms-blank'
+                                icon='icon adms-download'
                                 tooltip='Download deals form'
                                 onClick={() => printTableData()}
                             />
@@ -431,7 +431,7 @@ export const DealsDataTable = observer(
                             onClick={() => setDialogVisible(true)}
                         />
                         <span className='p-input-icon-right'>
-                            <i className='pi pi-search' />
+                            <i className='icon adms-search' />
                             <InputText
                                 value={globalSearch}
                                 onChange={(e) => setGlobalSearch(e.target.value)}

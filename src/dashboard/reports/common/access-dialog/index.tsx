@@ -328,7 +328,7 @@ export const EditAccessDialog = ({
                         </span>
                     </div>
                     <span className='p-input-icon-right'>
-                        <i className='pi pi-search' />
+                        <i className='icon adms-search' />
                         <InputText
                             placeholder='Search'
                             className='w-full'

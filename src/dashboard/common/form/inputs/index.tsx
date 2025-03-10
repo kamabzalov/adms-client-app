@@ -253,7 +253,7 @@ export const SearchInput = ({
                 onClick={onIconClick}
                 type='button'
             >
-                <i className='icon adms-table' />
+                <i className='icon adms-table-search' />
             </button>
         </div>
     );

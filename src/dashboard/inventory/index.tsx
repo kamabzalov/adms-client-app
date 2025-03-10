@@ -602,7 +602,7 @@ export default function Inventories({
                         className='inventory-top-controls__button'
                         severity='success'
                         type='button'
-                        icon='pi pi-print'
+                        icon='icon adms-print'
                         tooltip='Print inventory form'
                         onClick={() => printTableData(true)}
                     />
@@ -610,7 +610,7 @@ export default function Inventories({
                         className='inventory-top-controls__button'
                         severity='success'
                         type='button'
-                        icon='icon adms-blank'
+                        icon='icon adms-download'
                         tooltip='Download inventory form'
                         onClick={() => printTableData()}
                     />

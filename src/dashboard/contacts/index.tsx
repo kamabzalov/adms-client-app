@@ -385,7 +385,7 @@ export const ContactsDataTable = ({
 
                         <Button
                             className='contact-top-controls__button'
-                            icon='pi pi-plus-circle'
+                            icon='icon adms-add-item'
                             severity='success'
                             type='button'
                             tooltip='Add new contact'
@@ -401,7 +401,7 @@ export const ContactsDataTable = ({
                         <Button
                             severity='success'
                             type='button'
-                            icon='icon adms-blank'
+                            icon='icon adms-download'
                             tooltip='Download contacts form'
                             onClick={() => printTableData()}
                         />
@@ -416,7 +416,7 @@ export const ContactsDataTable = ({
                         onClick={() => setDialogVisible(true)}
                     />
                     <span className='p-input-icon-right'>
-                        <i className='pi pi-search' />
+                        <i className='icon adms-search' />
                         <InputText
                             value={globalSearch}
                             onChange={(e) => setGlobalSearch(e.target.value)}

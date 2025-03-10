@@ -21,6 +21,7 @@ import { useParams } from "react-router-dom";
 import { useStore } from "store/hooks";
 import { CATEGORIES } from "common/constants/media-categories";
 import { Loader } from "dashboard/common/loader";
+import { emptyTemplate } from "dashboard/common/form/upload";
 
 const limitations: MediaLimitations = {
     formats: ["MP4", "MKV", "MOV"],
@@ -221,22 +222,6 @@ export const VideoMedia = observer((): ReactElement => {
         );
     };
 
-    const emptyTemplate = () => {
-        return (
-            <div className='grid'>
-                <div className='flex align-items-center flex-column col-12'>
-                    <i className='pi pi-cloud-upload media__upload-icon' />
-                    <span className='media__upload-icon-label'>Drag and drop Video files here</span>
-                </div>
-                <div className='col-12 flex justify-content-center align-items-center media__upload-splitter'>
-                    <hr className='media__line mr-4 flex-1' />
-                    <span>or</span>
-                    <hr className='media__line ml-4 flex-1' />
-                </div>
-            </div>
-        );
-    };
-
     const chooseOptions = {
         className: "media__button",
         label: "Choose from files",
@@ -254,7 +239,7 @@ export const VideoMedia = observer((): ReactElement => {
                 onUpload={onTemplateUpload}
                 headerTemplate={limitations.maxUpload > totalCount ? chooseTemplate : <div></div>}
                 itemTemplate={itemTemplate}
-                emptyTemplate={emptyTemplate}
+                emptyTemplate={emptyTemplate("video files")}
                 onSelect={onTemplateSelect}
                 chooseOptions={chooseOptions}
                 progressBarTemplate={<></>}

@@ -62,59 +62,59 @@
 }
 
 .common-tasks-menu__icon.new-contact {
-    background-image: url("assets/images/icons/common-tasks/new-contact.svg");
+    background-image: url("assets/images/icons/common-tasks/normal/new_contact_blue.svg");
 }
 
 .common-tasks-menu__icon.browse-all-contacts {
-    background-image: url("assets/images/icons/common-tasks/browse-all-contacts.svg");
+    background-image: url("assets/images/icons/common-tasks/normal/all_contacts_blue.svg");
 }
 
 .common-tasks-menu__icon.new-inventory {
-    background-image: url("assets/images/icons/common-tasks/new-inventory.svg");
+    background-image: url("assets/images/icons/common-tasks/normal/new_inventory_blue.svg");
 }
 
 .common-tasks-menu__icon.browser-all-inventory {
-    background-image: url("assets/images/icons/common-tasks/browse-all-inventory.svg");
+    background-image: url("assets/images/icons/common-tasks/normal/all_inventory_blue.svg");
 }
 
 .common-tasks-menu__icon.new-deal {
-    background-image: url("assets/images/icons/common-tasks/new-deal.svg");
+    background-image: url("assets/images/icons/common-tasks/normal/new_deal_blue.svg");
 }
 
 .common-tasks-menu__icon.browse-all-deals {
-    background-image: url("assets/images/icons/common-tasks/browse-all-deals.svg");
+    background-image: url("assets/images/icons/common-tasks/normal/all_deals_blue.svg");
 }
 
 .common-tasks-menu__icon.print-test-drive {
-    background-image: url("assets/images/icons/common-tasks/test-drive.svg");
+    background-image: url("assets/images/icons/common-tasks/normal/print_for_test_drive_blue.svg");
 }
 
 .common-tasks-menu__item:hover .common-tasks-menu__icon.new-contact {
-    background-image: url("assets/images/icons/common-tasks/hover/new-contact.svg");
+    background-image: url("assets/images/icons/common-tasks/selected/new_contact_white.svg");
 }
 
 .common-tasks-menu__item:hover .common-tasks-menu__icon.browse-all-contacts {
-    background-image: url("assets/images/icons/common-tasks/hover/browse-all-contacts.svg");
+    background-image: url("assets/images/icons/common-tasks/selected/all_contacts_white.svg");
 }
 
 .common-tasks-menu__item:hover .common-tasks-menu__icon.new-inventory {
-    background-image: url("assets/images/icons/common-tasks/hover/new-inventory.svg");
+    background-image: url("assets/images/icons/common-tasks/selected/new_inventory_white.svg");
 }
 
 .common-tasks-menu__item:hover .common-tasks-menu__icon.browser-all-inventory {
-    background-image: url("assets/images/icons/common-tasks/hover/browse-all-inventory.svg");
+    background-image: url("assets/images/icons/common-tasks/selected/all_inventory_white.svg");
 }
 
 .common-tasks-menu__item:hover .common-tasks-menu__icon.new-deal {
-    background-image: url("assets/images/icons/common-tasks/hover/new-deal.svg");
+    background-image: url("assets/images/icons/common-tasks/selected/new_deal_white.svg");
 }
 
 .common-tasks-menu__item:hover .common-tasks-menu__icon.browse-all-deals {
-    background-image: url("assets/images/icons/common-tasks/hover/browse-all-deals.svg");
+    background-image: url("assets/images/icons/common-tasks/selected/all_deals_white.svg");
 }
 
 .common-tasks-menu__item:hover .common-tasks-menu__icon.print-test-drive {
-    background-image: url("assets/images/icons/common-tasks/hover/test-drive.svg");
+    background-image: url("assets/images/icons/common-tasks/selected/print_for_test_drive_white.svg");
 }
 
 .add-task-control {

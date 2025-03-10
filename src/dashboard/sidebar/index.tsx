@@ -63,7 +63,7 @@ export const Sidebar = observer((): ReactElement => {
                         {renderNavItem("/dashboard/deals", "deals", "Deals")}
                         {renderNavItem("/dashboard/accounts", "accounts", "Accounts")}
                         {renderNavItem("/dashboard/reports", "reports", "Reports")}
-                        {renderNavItem("/dashboard/export-web", "reports", "Export to Web")}
+                        {renderNavItem("/dashboard/export-web", "export-web", "Export to Web")}
                         {renderNavItem("/dashboard/tasks", "tasks", "Tasks")}
                     </>
                 )}

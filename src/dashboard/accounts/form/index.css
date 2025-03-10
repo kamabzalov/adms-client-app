@@ -10,7 +10,7 @@
     font-family: "Open Sans", sans-serif;
 }
 
-.account__tabs>.p-tabview-nav-container .p-tabview-nav {
+.account__tabs > .p-tabview-nav-container .p-tabview-nav {
     flex-direction: column;
     flex: 0 0;
     width: 342px;
@@ -26,7 +26,7 @@
     padding-top: 0;
 }
 
-.account__tabs>.p-tabview-nav-container a.p-tabview-nav-link {
+.account__tabs > .p-tabview-nav-container a.p-tabview-nav-link {
     color: var(--admss-app-primary);
     border: none;
 }
@@ -35,7 +35,7 @@
     box-shadow: none;
 }
 
-.account__tabs>.p-tabview-nav-container a.p-tabview-nav-link[aria-selected="true"] {
+.account__tabs > .p-tabview-nav-container a.p-tabview-nav-link[aria-selected="true"] {
     color: var(--admss-app-primary);
     background: var(--admss-app-light-blue);
     border-radius: 0;
@@ -87,8 +87,8 @@
         border-right: none;
     }
 
-    .account__table-checkbox+td,
-    .account__table-checkbox+th {
+    .account__table-checkbox + td,
+    .account__table-checkbox + th {
         border-left: 0;
     }
 
@@ -125,6 +125,9 @@
     height: 54px;
     font-weight: 700;
     font-size: 22px;
+    .p-button-icon {
+        font-size: 20px;
+    }
 }
 
 .account__split-button.p-splitbutton .p-splitbutton-defaultbutton .p-button-label {
@@ -148,7 +151,9 @@
     opacity: 0.2;
 }
 
-.account__split-button.p-splitbutton .p-splitbutton-menubutton[aria-expanded="true"] .p-button-icon {
+.account__split-button.p-splitbutton
+    .p-splitbutton-menubutton[aria-expanded="true"]
+    .p-button-icon {
     rotate: 180deg;
 }
 
@@ -171,8 +176,8 @@
     display: none;
 }
 
-.account__body .p-datatable:has(.p-datatable-emptymessage) .p-datatable-thead>tr>th,
-.account__body .p-datatable:has(.p-datatable-emptymessage) .p-datatable-tbody>tr>td {
+.account__body .p-datatable:has(.p-datatable-emptymessage) .p-datatable-thead > tr > th,
+.account__body .p-datatable:has(.p-datatable-emptymessage) .p-datatable-tbody > tr > td {
     border: none;
 }
 

@@ -252,7 +252,7 @@ export const AccountsDataTable = observer(
                             <Button
                                 severity='success'
                                 type='button'
-                                icon='icon adms-blank'
+                                icon='icon adms-download'
                                 tooltip='Download accounts form'
                                 onClick={() => printTableData()}
                             />
@@ -267,7 +267,7 @@ export const AccountsDataTable = observer(
                             onClick={() => setDialogVisible(true)}
                         />
                         <span className='p-input-icon-right'>
-                            <i className='pi pi-search' />
+                            <i className='icon adms-search' />
                             <InputText
                                 value={globalSearch}
                                 onChange={(e) => setGlobalSearch(e.target.value)}

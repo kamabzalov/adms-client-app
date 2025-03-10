@@ -162,7 +162,7 @@ export const AccountPaymentHistory = observer((): ReactElement => {
     const downloadItems = [
         {
             label: "Download receipt",
-            icon: "icon adms-blank",
+            icon: "icon adms-print-receipt-01",
             command: () => {
                 const currentData = historyList.filter((_, index) => selectedRows[index]);
                 if (!currentData.length) {
@@ -457,7 +457,7 @@ export const AccountPaymentHistory = observer((): ReactElement => {
                             model={printItems}
                             className='account__split-button'
                             label='Print'
-                            icon='pi pi-table'
+                            icon='icon adms-table-button'
                             tooltip='Print table'
                             tooltipOptions={{
                                 position: "bottom",
@@ -471,7 +471,7 @@ export const AccountPaymentHistory = observer((): ReactElement => {
                             model={downloadItems}
                             className='account__split-button'
                             label='Download'
-                            icon='pi pi-table'
+                            icon='icon adms-table-button'
                             tooltip='Download table'
                             tooltipOptions={{
                                 position: "bottom",

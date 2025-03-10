@@ -261,11 +261,11 @@ export const ExportHistory = (): ReactElement => {
                     <Button
                         severity='success'
                         type='button'
-                        icon='pi pi-download'
+                        icon='icon adms-download'
                         tooltip='Download export to web form'
                     />
                     <span className='p-input-icon-right export-web__search ml-auto'>
-                        <i className='pi pi-search' />
+                        <i className='icon adms-search' />
                         <InputText
                             value={globalSearch}
                             placeholder='Search'

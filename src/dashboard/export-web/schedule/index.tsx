@@ -315,7 +315,7 @@ export const ExportSchedule = (): ReactElement => {
                     <Button
                         severity='success'
                         type='button'
-                        icon='pi pi-download'
+                        icon='icon adms-download'
                         tooltip='Download export to web form'
                     />
                 </div>

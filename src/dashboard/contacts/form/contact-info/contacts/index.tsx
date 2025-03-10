@@ -12,7 +12,14 @@ interface SocialInputProps extends InputTextProps {
 }
 
 const SocialInput = (props: SocialInputProps): ReactElement => {
-    const currentIcon = `pi pi-${props.social.toLowerCase()}`;
+    const iconMap = {
+        Skype: "adms-skype",
+        Facebook: "adms-facebook",
+        WhatsApp: "adms-whatsapp",
+        Slack: "adms-slack-01",
+    };
+    const currentIcon = iconMap[props.social];
+
     return (
         <span className='p-float-label contact-social'>
             <InputText
@@ -172,7 +179,7 @@ export const ContactsSocialInfo = observer((): ReactElement => {
 
             <div className='col-6'>
                 <SocialInput
-                    social='Slack'
+                    social={"Slack"}
                     value={contact.messager3}
                     onChange={({ target: { value } }) => changeContact("messager3", value)}
                 />
