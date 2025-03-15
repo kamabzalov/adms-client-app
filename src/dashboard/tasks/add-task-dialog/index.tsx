@@ -196,21 +196,21 @@ export const AddTaskDialog = observer(
                     </div>
 
                     <AccountSearch
-                        value={taskState.accountname?.trim() || taskState.accountuid || ""}
+                        value={taskState.accountname?.trim() || ""}
                         onRowClick={(value) => handleInputChange("accountname", value)}
                         getFullInfo={handleGetAccountInfo}
                         name='Account (optional)'
                     />
 
                     <DealSearch
-                        value={taskState.dealname?.trim() || taskState.dealuid || ""}
+                        value={taskState.dealname?.trim() || ""}
                         onRowClick={(value) => handleInputChange("dealname", value)}
                         getFullInfo={handleGetDealInfo}
                         name='Deal (optional)'
                     />
 
                     <CompanySearch
-                        value={taskState.contactname?.trim() || taskState.contactuid || ""}
+                        value={taskState.contactname?.trim() || ""}
                         onRowClick={(value) => handleInputChange("contactname", value)}
                         getFullInfo={handleGetCompanyInfo}
                         name='Contact'

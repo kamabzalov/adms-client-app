@@ -147,3 +147,12 @@ export const validateDates = (start: string, due: string): { isValid: boolean; e
     }
     return { isValid: true };
 };
+
+export const convertDateToTimestamp = (dateString: string): number => {
+    const date = new Date(dateString);
+    const localDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
+    let timestamp = localDate.getTime();
+    const timezoneOffset = localDate.getTimezoneOffset() * 60 * 1000;
+    timestamp += timezoneOffset;
+    return Math.floor(timestamp / 1000.0);
+};

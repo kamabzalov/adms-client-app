@@ -33,7 +33,11 @@ import { Checkbox } from "primereact/checkbox";
 import { BorderedCheckbox } from "dashboard/common/form/inputs";
 import { AddTaskDialog } from "dashboard/tasks/add-task-dialog";
 import { TotalListCount } from "common/models/base-response";
-import { createStringifySearchQuery, isObjectValuesEmpty } from "common/helpers";
+import {
+    convertDateToTimestamp,
+    createStringifySearchQuery,
+    isObjectValuesEmpty,
+} from "common/helpers";
 
 const alwaysActiveColumns: TableColumnsList[] = [
     { field: "assignedto", header: "Assigned To", checked: true },
@@ -72,10 +76,10 @@ export const TasksDataTable = observer((): ReactElement => {
         let responseTotal: TotalListCount = {} as TotalListCount;
         let response = [];
         if (onlyCurrentUserTasks) {
-            responseTotal = await getCurrentUserTasks(authUser!.useruid, { total: 1 });
+            responseTotal = await getCurrentUserTasks(authUser!.useruid, { ...params, total: 1 });
             response = await getCurrentUserTasks(authUser!.useruid, params);
         } else {
-            responseTotal = await getAllTasks(authUser!.useruid, { total: 1 });
+            responseTotal = await getAllTasks(authUser!.useruid, { ...params, total: 1 });
             response = await getAllTasks(authUser!.useruid, params);
         }
 
@@ -155,23 +159,24 @@ export const TasksDataTable = observer((): ReactElement => {
             .filter(([_, value]) => value)
             .map(([key, value]) => {
                 let keyName: string = key;
+                let formattedValue: string | number = value;
                 switch (key) {
                     case SEARCH_FORM_FIELDS.CREATION_DATE:
                         keyName = SEARCH_FORM_QUERY.CREATION_DATE;
-                        value = new Date(value).getTime();
+                        formattedValue = convertDateToTimestamp(value as string);
                         break;
 
                     case SEARCH_FORM_FIELDS.DESCRIPTION:
                         keyName = SEARCH_FORM_QUERY.DESCRIPTION;
                         break;
                 }
-                return `${value}.${keyName}`;
+                return `${formattedValue}.${keyName}`;
             })
             .join("+");
 
         const params: QueryParams = {
-            top: lazyState.first,
-            skip: lazyState.skip,
+            top: lazyState.rows,
+            skip: lazyState.first,
             qry: searchQuery,
         };
         authUser && handleGetTasks(params);
@@ -301,8 +306,8 @@ export const TasksDataTable = observer((): ReactElement => {
 
     return (
         <div className='card-content tasks'>
-            <div className='grid datatable-controls'>
-                <div className='col-6 p-0 flex gap-3'>
+            <div className='datatable-controls flex flex-wrap justify-content-between align-items-center gap-3'>
+                <div className='flex align-items-center gap-3 flex-wrap'>
                     <span className='p-input-icon-right tasks-search'>
                         <i className='icon adms-search' />
                         <InputText
@@ -318,7 +323,6 @@ export const TasksDataTable = observer((): ReactElement => {
                         type='button'
                         onClick={() => setDialogVisible(true)}
                     />
-
                     <Button
                         severity='success'
                         className='tasks__add-button'
@@ -328,7 +332,7 @@ export const TasksDataTable = observer((): ReactElement => {
                         onClick={() => handleCreateTask()}
                     />
                 </div>
-                <div className='col-6 p-0 flex gap-3'>
+                <div className='flex align-items-center gap-3 flex-wrap'>
                     <MultiSelect
                         optionValue='value'
                         optionLabel='name'
@@ -339,7 +343,7 @@ export const TasksDataTable = observer((): ReactElement => {
                             setSelectedStatusFilters(e.value);
                         }}
                         placeholder='Status'
-                        className='pb-0 flex align-items-center tasks-filter'
+                        className='tasks-filter'
                         display='chip'
                         selectedItemsLabel='Clear Filter'
                         panelHeaderTemplate={dropdownFilterHeaderPanel}
@@ -355,7 +359,6 @@ export const TasksDataTable = observer((): ReactElement => {
                             },
                         }}
                     />
-
                     <BorderedCheckbox
                         checked={onlyCurrentUserTasks}
                         onChange={(e) => {
@@ -372,7 +375,7 @@ export const TasksDataTable = observer((): ReactElement => {
                             setActiveColumns(value);
                         }}
                         panelHeaderTemplate={dropdownHeaderPanel}
-                        className='pb-0 h-full flex align-items-center tasks-filter'
+                        className='tasks-filter'
                         display='chip'
                         pt={{
                             header: {
