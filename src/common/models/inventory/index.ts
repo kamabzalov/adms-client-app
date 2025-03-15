@@ -1,6 +1,7 @@
 import { ListData, PrintForm } from "common/models";
 import { BaseResponse, BaseResponseError, Status } from "common/models/base-response";
 import { ContentType } from "common/models/enums";
+import { MediaLimits } from "common/models";
 
 export interface LocationsListData {
     locations: InventoryLocations[];
@@ -331,14 +332,7 @@ export interface InventoryMedia extends InventoryMediaItemID {
     useruid: string;
 }
 
-export interface MediaLimitations {
-    formats: string[];
-    codecs?: string;
-    minResolution?: string;
-    prefResolution?: string;
-    maxResolution?: string;
-    maxDuration?: number;
-    maxSize: number;
+export interface MediaLimitations extends MediaLimits {
     maxUpload: number;
 }
 

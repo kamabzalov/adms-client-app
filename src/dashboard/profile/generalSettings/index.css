@@ -1,21 +1,33 @@
+.general-settings .card {
+    height: 83vh;
+}
+
+.settings-form {
+    height: 594px;
+}
+
 .general-settings__tabs {
     display: flex;
     border-right: 2px solid var(--admss-app-light-blue);
+    overflow: scroll;
 }
 
 .general-settings__tabs .p-tabview-nav {
     flex-direction: column;
     flex: 0 0;
-    width: 294px;
+    width: 343px;
     border: none;
     min-height: 527px;
-    border-right: 5px solid var(--admss-app-light-blue);
+    height: 100%;
     gap: 10px;
 }
 
 .general-settings__tabs .p-tabview-panels {
     flex: 1;
     padding-top: 0;
+    padding-left: 40px;
+    border-left: 2px solid var(--admss-app-light-blue);
+    border-radius: 0;
 }
 
 .general-settings__tabs > .p-tabview-nav-container a.p-tabview-nav-link {
@@ -40,10 +52,6 @@
 
 .general-settings .p-slider .p-slider-handle:focus {
     box-shadow: none;
-}
-
-.general-settings .p-inputtext:enabled:focus + .float-label {
-    margin: 0;
 }
 
 .settings-form__title {

@@ -22,3 +22,14 @@ export interface PrintForm {
 export interface TreeNodeEvent extends TreeNode {
     type: string;
 }
+
+export interface MediaLimits {
+    formats: string[];
+    codecs?: string;
+    minResolution?: string;
+    prefResolution?: string;
+    maxResolution?: string;
+    maxDuration?: number;
+    maxSize: number;
+    maxUpload?: number;
+}
